@@ -7,6 +7,8 @@ import path from 'path';
 
 import { connectDb } from './configs/dbConnection.js';
 
+import userRoute from './routes/userRoute.js';
+
 dotenv.config({ path: `${process.cwd()}/.env` });
 
 connectDb();
@@ -25,6 +27,8 @@ app.use(express.json());
 app.use(logger('dev'));
 
 app.use('/uploads', express.static(path.join(path.dirname(''), 'uploads')));
+
+app.use(`/api/${apiVersion}`, userRoute);
 
 app.use('*', (_, res) => {
   res.status(404).json({
