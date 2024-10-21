@@ -1,6 +1,11 @@
 import { UserDAO } from '../data/UserDAO.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import {
+  ConflictError,
+  CredentialsError,
+  NotFoundError,
+} from '../utils/Error.js';
 
 class AuthService {
   static async register(userData) {
