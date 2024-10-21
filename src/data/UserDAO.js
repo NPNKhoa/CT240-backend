@@ -1,4 +1,3 @@
-// /dao/userDAO.js
 import { User } from '../models/User.js';
 
 export class UserDAO {

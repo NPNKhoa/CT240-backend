@@ -1,4 +1,3 @@
-// /controllers/userController.js
 import { UserService } from '../services/user.service.js';
 
 export class UserController {

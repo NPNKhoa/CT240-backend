@@ -1,4 +1,4 @@
-class ConflictError extends Error {
+export class ConflictError extends Error {
   constructor(message) {
     super(message);
     this.name = 'ConflictError';
@@ -6,7 +6,7 @@ class ConflictError extends Error {
   }
 }
 
-class NotFoundError extends Error {
+export class NotFoundError extends Error {
   constructor(message) {
     super(message);
     this.name = 'NotFoundError';
@@ -14,10 +14,18 @@ class NotFoundError extends Error {
   }
 }
 
-class ValidationError extends Error {
+export class ValidationError extends Error {
   constructor(message) {
     super(message);
     this.name = 'ValidationError';
+    this.statusCode = 400;
+  }
+}
+
+export class CredentialsError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'CredentialsError';
     this.statusCode = 400;
   }
 }

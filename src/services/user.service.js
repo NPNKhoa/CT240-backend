@@ -1,4 +1,3 @@
-// /services/userService.js
 import { UserDAO } from '../data/UserDAO.js';
 import bcrypt from 'bcrypt';
 
