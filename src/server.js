@@ -28,7 +28,7 @@ app.use(logger('dev'));
 
 app.use('/uploads', express.static(path.join(path.dirname(''), 'uploads')));
 
-app.use(`/api/${apiVersion}`, userRoute);
+app.use(`/api/${apiVersion}/users`, userRoute);
 
 app.use('*', (_, res) => {
   res.status(404).json({
