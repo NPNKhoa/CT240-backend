@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 export const userValidator = Joi.object({
-  fullName: Joi.string().min(3).max(100).required(),
+  fullName: Joi.string().min(3).max(100),
   age: Joi.number().integer().min(18),
-  email: Joi.string().required,
+  email: Joi.string().required(),
   dateOfBirth: Joi.date(),
   address: Joi.string().min(10).max(200),
   username: Joi.string().alphanum().min(3).max(30).required(),

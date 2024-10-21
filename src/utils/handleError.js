@@ -1,4 +1,4 @@
-export function handleError(res, error) {
+export function handleError(error, res) {
   console.error(error);
   res
     .status(500)

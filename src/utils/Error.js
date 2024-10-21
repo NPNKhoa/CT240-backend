@@ -21,3 +21,11 @@ class ValidationError extends Error {
     this.statusCode = 400;
   }
 }
+
+class CredentialsError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'CredentialsError';
+    this.statusCode = 400;
+  }
+}

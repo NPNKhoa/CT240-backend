@@ -1,28 +1,36 @@
-import AuthService from '../services/authService';
-import { authSchema } from '../validators/authValidator';
+import AuthService from '../services/auth.service.js';
+import { userValidator } from '../validators/userValidator.js';
+import { handleError } from '../utils/handleError.js';
 
 class AuthController {
   static async register(req, res) {
-    const { error } = authSchema.validate(req.body);
+    const { error } = userValidator.validate(req.body);
+
     if (error) {
+      console.log(error);
       return res.status(400).json({ message: error.details[0].message });
     }
 
     try {
       const newUser = await AuthService.register(req.body);
-      res.status(201).json(newUser);
+
+      res.status(201).json({
+        data: newUser,
+      });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      handleError(err, res);
     }
   }
 
   static async login(req, res) {
     try {
-      const { email, password } = req.body;
-      const token = await AuthService.login(email, password);
-      res.json({ token });
+      const { username, password } = req.body;
+
+      const token = await AuthService.login(username, password);
+
+      res.status(200).json({ token });
     } catch (err) {
-      res.status(400).json({ message: err.message });
+      handleError(err, res);
     }
   }
 }
