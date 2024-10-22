@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 export class ProjectTypeService {
   static async getAllProjectTypes() {
-    const projectTypes = await ProjectTypeDAO.getAllUsers();
+    const projectTypes = await ProjectTypeDAO.getAllProjectTypes();
 
     if (projectTypes === null || (Array.isArray(projectTypes) && projectTypes.length === 0)) {
       throw new NotFoundError('ProjectType not found');
@@ -28,6 +28,6 @@ export class ProjectTypeService {
   }
 
   static async deleteProjectType(projectTypeId) {
-    return await ProjectTypeDAO.deleteProjectType(projectTypeid);
+    return await ProjectTypeDAO.deleteProjectType(projectTypeId);
   }
 }
