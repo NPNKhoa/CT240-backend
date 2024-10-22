@@ -9,3 +9,10 @@ export const userValidator = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
   password: Joi.string().min(6).required(),
 });
+
+export const userUpdateSchema = Joi.object({
+  email: Joi.string().email(),
+  fullName: Joi.string().max(100),
+}).min(1);
+
+export const userIdSchema = Joi.string().hex().length(24);
