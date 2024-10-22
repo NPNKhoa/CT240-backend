@@ -7,9 +7,11 @@ import path from 'path';
 
 import { connectDb } from './configs/dbConnection.js';
 
+import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
 import projectTypeRoute from './routes/projectTypeRoute.js';
-import phaseRoute from './routes/phaseRoute.js';import authRoute from './routes/authRoute.js';
+import phaseRoute from './routes/phaseRoute.js';
+import projectRoute from './routes/projectRoute.js';
 
 dotenv.config({ path: `${process.cwd()}/.env` });
 
@@ -30,10 +32,11 @@ app.use(logger('dev'));
 
 app.use('/uploads', express.static(path.join(path.dirname(''), 'uploads')));
 
+app.use(`/api/${apiVersion}/auth`, authRoute);
 app.use(`/api/${apiVersion}/users`, userRoute);
 app.use(`/api/${apiVersion}/project-types`, projectTypeRoute);
 app.use(`/api/${apiVersion}/phase`, phaseRoute);
-app.use(`/api/${apiVersion}/auth`, authRoute);
+app.use(`/api/${apiVersion}/projects`, projectRoute);
 
 app.use('*', (_, res) => {
   res.status(404).json({
