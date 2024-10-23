@@ -5,8 +5,8 @@ export class PhaseDAO {
     return await Phase.find();
   }
 
-  static async findPhaseByName(phaseName) {
-    return await Phase.findPhaseByName(phaseName);
+  static async getPhaseByName(phaseName) {
+    return await Phase.findOne(phaseName);
   }
 
   static async createPhase(phaseData) {
@@ -15,7 +15,7 @@ export class PhaseDAO {
   }
 
   static async updatePhase(phaseId, phaseData) {
-    return await Phase.findPhaseByIdandUpdate(phaseId, phaseData, { new: true });
+        return await Phase.findByIdAndUpdate(phaseId, phaseData, { new: true });
   }
 
   static async deletePhase(phaseId){

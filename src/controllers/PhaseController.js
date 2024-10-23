@@ -1,23 +1,24 @@
 import {PhaseService } from '../services/phase.service.js';
+import { handleError } from '../utils/handleError.js';
 export class PhaseController {
   static async getAllPhase(_, res) {
     try {
-      const phase = await PhaseTypeServiceService.getAllProjectType();
+      const phase = await PhaseService.getAllPhase();
       res.status(200).json(phase);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      handleError(error,res);
     }
   }
 
   static async getPhasebyName(req, res) {
     try {
-      const phase = await PhaseService.getPhasebyName(req.params.name);
-      if (!phase) {
+      const phase = await PhaseService.getPhaseByName(req.params.phase);
+            if (!phase) {
         return res.status(404).json({ message: 'Phase not found' });
       }
       res.status(200).json(phase);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      handleError(error,res);
     }
   }
 
@@ -32,7 +33,7 @@ export class PhaseController {
       const newPhase = await PhaseService.createPhase(req.body);
       res.status(201).json(newPhase);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      handleError(error,res);
     }
   }
 
@@ -41,7 +42,7 @@ export class PhaseController {
       const phase = await PhaseService.updatePhase(req.params.id, req.body);
       res.status(200).json(phase);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      handleError(error,res);
     }
   }
 
@@ -50,7 +51,7 @@ export class PhaseController {
       await PhaseService.deletePhase(req.params.id);
       res.status(204).send();
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      handleError(error,res);
     }
   }
 }
