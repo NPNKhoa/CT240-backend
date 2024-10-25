@@ -12,7 +12,7 @@ export class PhaseController {
 
   static async getPhasebyName(req, res) {
     try {
-      const phase = await PhaseService.getPhaseByName(req.params.phase);
+      const phase = await PhaseService.getPhaseByName(req.params.phaseName);
             if (!phase) {
         return res.status(404).json({ message: 'Phase not found' });
       }
