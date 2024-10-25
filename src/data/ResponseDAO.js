@@ -1,4 +1,4 @@
-import { Response } from '../models/ResponseModel.js';
+import { Response } from '../models/Response.js';
 
 export class ResponseDAO {
   static async createResponse(responseData) {

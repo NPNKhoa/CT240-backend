@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-import logError from '../utils/logError.js';
-
 export const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -36,6 +34,10 @@ export const auth = async (req, res, next) => {
       }
     );
   } catch (error) {
-    logError(error, res);
+    console.log(error);
+    res.status(500).json({
+      message: 'Internal server error',
+      error,
+    });
   }
 };

@@ -1,6 +1,6 @@
 import express from 'express';
 import { FileController } from '../controllers/FileController.js';
-import upload from '../config/multerConfig.js';
+import upload from '../configs/multerConfig.js';
 
 const router = express.Router();
 

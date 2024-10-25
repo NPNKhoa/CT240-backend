@@ -1,4 +1,4 @@
-import { FileService } from '../services/FileService.js';
+import { FileService } from '../services/file.service.js';
 import { handleError } from '../utils/handleError.js';
 
 export class FileController {

@@ -31,4 +31,10 @@ export class UserProjectDAO {
   static async findByUserId(userId) {
     return await UserProject.find({ userId });
   }
+
+  static async findOwnProject(userId) {
+    return await UserProject.find({ userId, userRole: 'owner' })
+      .populate('projectId')
+      .populate('userId');
+  }
 }
