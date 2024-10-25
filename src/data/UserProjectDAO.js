@@ -2,12 +2,20 @@ import { UserProject } from '../models/UserProject.js';
 
 export class UserProjectDAO {
   static async getAllUserProjects() {
-    return await UserProject.find().populate('userId').populate('projectId');
+    return await UserProject.find().populate('projectId').populate({
+      path: 'userId',
+      model: 'User',
+      select: '-password',
+    });
   }
 
   static async getUserProjectById(id) {
     return await UserProject.findById(id)
-      .populate('userId')
+      .populate({
+        path: 'userId',
+        model: 'User',
+        select: '-password',
+      })
       .populate('projectId');
   }
 
@@ -25,16 +33,22 @@ export class UserProjectDAO {
   }
 
   static async findByProjectId(projectId) {
-    return await UserProject.find({ projectId });
+    return await UserProject.find({ projectId }).select('userId').populate({
+      path: 'userId',
+      model: 'User',
+      select: '-password',
+    });
   }
 
   static async findByUserId(userId) {
-    return await UserProject.find({ userId });
+    return await UserProject.find({ userId })
+      .select('projectId')
+      .populate('projectId');
   }
 
-  static async findOwnProject(userId) {
+  static async findOwnProjects(userId) {
     return await UserProject.find({ userId, userRole: 'owner' })
-      .populate('projectId')
-      .populate('userId');
+      .select('projectId')
+      .populate('projectId');
   }
 }

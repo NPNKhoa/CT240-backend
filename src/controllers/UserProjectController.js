@@ -2,7 +2,7 @@ import { UserProjectService } from '../services/userProject.service.js';
 import { handleError } from '../utils/handleError.js';
 import { projectIdSchema } from '../validators/projectValidator.js';
 import { userProjectValidator } from '../validators/userProjectValidator.js';
-import { userIdSchema } from '../validators/userValidator.js';
+import { userIdSchema, userValidator } from '../validators/userValidator.js';
 
 export class UserProjectController {
   static async getAllUserProjects(_, res) {
@@ -60,10 +60,10 @@ export class UserProjectController {
   static async getUsersInProject(req, res) {
     try {
       const users = await UserProjectService.getUserProjectByProjectId(
-        req.params.id
+        req.params.projectId
       );
 
-      const { error } = projectIdSchema(req.params.id);
+      const { error } = projectIdSchema.validate(req.params.id);
 
       if (error) {
         return res.status(400).json({
@@ -82,10 +82,10 @@ export class UserProjectController {
   static async getProjectByUser(req, res) {
     try {
       const users = await UserProjectService.getUserProjectByUserId(
-        req.params.id
+        req.params.userId
       );
 
-      const { error } = userIdSchema(req.params.id);
+      const { error } = userIdSchema.validate(req.params.id);
 
       if (error) {
         return res.status(400).json({
@@ -101,15 +101,23 @@ export class UserProjectController {
     }
   }
 
-  static async getOwnProject(req, res) {
+  static async getOwnProjects(req, res) {
     try {
       const { id: userId } = req.userId;
 
-      console.log(req.userId);
+      const { error } = userIdSchema.validate(userId);
 
-      const projects = await UserProjectService.findOwnProject(userId);
+      if (error) {
+        return res.status(400).json({
+          message: 'Invalid user id',
+        });
+      }
 
-      res.status(200).json(projects);
+      const projects = await UserProjectService.findOwnProjects(userId);
+
+      res.status(200).json({
+        data: projects,
+      });
     } catch (error) {
       handleError(error, res);
     }
