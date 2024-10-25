@@ -7,7 +7,7 @@ router.post('/',PhaseController.createPhase);
 
 router.get('/', PhaseController.getAllPhase);
 
-router.get('/:name', PhaseController.getPhasebyName);
+router.get('/:phaseName', PhaseController.getPhasebyName);
 
 router.put('/:id', PhaseController.updatePhase);
 
