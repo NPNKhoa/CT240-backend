@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.get('/', UserProjectController.getAllUserProjects);
 
-router.get('/my-projects', auth, UserProjectController.getOwnProject);
+router.get('/my-projects', auth, UserProjectController.getOwnProjects);
 
-router.get('/projects/:id', UserProjectController.getProjectByUser);
+router.get('/projects/:userId', UserProjectController.getProjectByUser);
 
-router.get('/users/:id', UserProjectController.getUsersInProject);
+router.get('/users/:projectId', UserProjectController.getUsersInProject);
 
 router.get('/:id', UserProjectController.getUserProjectById);
 

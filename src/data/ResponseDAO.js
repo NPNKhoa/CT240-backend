@@ -7,12 +7,24 @@ export class ResponseDAO {
   }
 
   static async getAllResponses() {
-    return await Response.find().populate('fileId questionId userId').exec();
+    return await Response.find()
+      .populate('fileId questionId')
+      .populate({
+        path: 'userId',
+        model: 'User',
+        select: '-password',
+      })
+      .exec();
   }
 
   static async getResponseById(responseId) {
     return await Response.findById(responseId)
-      .populate('fileId questionId userId')
+      .populate('fileId questionId')
+      .populate({
+        path: 'userId',
+        model: 'User',
+        select: '-password',
+      })
       .exec();
   }
 

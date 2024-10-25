@@ -56,7 +56,7 @@ export class UserProjectService {
   }
 
   static async getUserProjectByUserId(userId) {
-    const userProjects = await UserProjectDAO.findByProjectId(userId);
+    const userProjects = await UserProjectDAO.findByUserId(userId);
 
     if (Array.isArray(userProjects) && userProjects.length === 0) {
       throw new NotFoundError('Can not found project for this user');
@@ -65,8 +65,8 @@ export class UserProjectService {
     return userProjects;
   }
 
-  static async findOwnProject(userId) {
-    const ownProjects = await UserProjectDAO.findOwnProject(userId);
+  static async findOwnProjects(userId) {
+    const ownProjects = await UserProjectDAO.findOwnProjects(userId);
 
     if (!ownProjects || ownProjects.length === 0) {
       throw new NotFoundError('No owned projects found for this user');
