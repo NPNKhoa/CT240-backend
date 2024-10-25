@@ -100,4 +100,18 @@ export class UserProjectController {
       handleError(error, res);
     }
   }
+
+  static async getOwnProject(req, res) {
+    try {
+      const { id: userId } = req.userId;
+
+      console.log(req.userId);
+
+      const projects = await UserProjectService.findOwnProject(userId);
+
+      res.status(200).json(projects);
+    } catch (error) {
+      handleError(error, res);
+    }
+  }
 }

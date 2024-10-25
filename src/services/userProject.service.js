@@ -64,4 +64,14 @@ export class UserProjectService {
 
     return userProjects;
   }
+
+  static async findOwnProject(userId) {
+    const ownProjects = await UserProjectDAO.findOwnProject(userId);
+
+    if (!ownProjects || ownProjects.length === 0) {
+      throw new NotFoundError('No owned projects found for this user');
+    }
+
+    return ownProjects;
+  }
 }
