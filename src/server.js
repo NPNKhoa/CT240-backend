@@ -12,6 +12,7 @@ import userRoute from './routes/userRoute.js';
 import projectTypeRoute from './routes/projectTypeRoute.js';
 import phaseRoute from './routes/phaseRoute.js';
 import projectRoute from './routes/projectRoute.js';
+import userProjectRoute from './routes/userProjectRoute.js';
 
 dotenv.config({ path: `${process.cwd()}/.env` });
 
@@ -37,6 +38,7 @@ app.use(`/api/${apiVersion}/users`, userRoute);
 app.use(`/api/${apiVersion}/project-types`, projectTypeRoute);
 app.use(`/api/${apiVersion}/phase`, phaseRoute);
 app.use(`/api/${apiVersion}/projects`, projectRoute);
+app.use(`/api/${apiVersion}/user-projects`, userProjectRoute);
 
 app.use('*', (_, res) => {
   res.status(404).json({
