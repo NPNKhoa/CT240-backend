@@ -1,30 +1,64 @@
-import bcrypt from 'bcrypt';
-import {PhaseDAO} from '../data/PhaseDAO.js';
+import { PhaseDAO } from '../data/PhaseDAO.js';
+import { NotFoundError, ValidationError } from '../utils/Error.js';
+import { phaseValidator } from '../validators/phaseValidator.js';
+
 export class PhaseService {
-    static async getAllPhase(){
-        const phases = await PhaseDAO.getAllPhase();
-        if (phases === null || (Array.isArray(phases) && phases.length === 0)){
-            throw new NotFoundError('Phase not found');
-        }
+  static async getAllPhases() {
+    const phases = await PhaseDAO.getAllPhases();
 
-        return phases;
+    if (phases === null || (Array.isArray(phases) && phases.length === 0)) {
+      throw new NotFoundError('Phases not found');
     }
 
-    static async getPhaseByName(phaseName){
-        return await PhaseDAO.getPhaseByName(phaseName);
+    return phases;
+  }
+
+  static async getPhaseByName(phaseName) {
+    const phase = await PhaseDAO.getPhaseByName(phaseName);
+
+    if (!phase) {
+      throw new NotFoundError('Phase not found');
     }
 
-    static async createPhase(phaseData){
-        const Phase = {
-            ...phaseData,
-        };
-        return await PhaseDAO.createPhase(phaseData);
-    }
-    static async updatePhase(phaseId,phaseData){
-        return await PhaseDAO.updatePhase(phaseId,phaseData);
+    return phase;
+  }
+
+  static async createPhase(phaseData) {
+    // Validate phase data
+    const { error } = phaseValidator.validate(phaseData);
+    if (error) {
+      throw new ValidationError(error.details[0].message);
     }
 
-    static async deletePhase(phaseId){
-        return await PhaseDAO.deletePhase(phaseId);
+    // Create phase
+    return await PhaseDAO.createPhase(phaseData);
+  }
+
+  static async updatePhase(phaseId, phaseData) {
+    // Check if phase exists
+    const existingPhase = await PhaseDAO.findPhaseById(phaseId);
+    if (!existingPhase) {
+      throw new NotFoundError('Phase not found');
     }
+
+    // Validate updated data
+    const { error } = phaseValidator.validate(phaseData);
+    if (error) {
+      throw new ValidationError(error.details[0].message);
+    }
+
+    // Update phase
+    return await PhaseDAO.updatePhase(phaseId, phaseData);
+  }
+
+  static async deletePhase(phaseId) {
+    // Check if phase exists
+    const existingPhase = await PhaseDAO.findPhaseById(phaseId);
+    if (!existingPhase) {
+      throw new NotFoundError('Phase not found');
+    }
+
+    // Delete phase
+    return await PhaseDAO.deletePhase(phaseId);
+  }
 }
