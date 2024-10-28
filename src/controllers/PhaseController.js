@@ -3,7 +3,7 @@ import { handleError } from '../utils/handleError.js';
 export class PhaseController {
   static async getAllPhase(_, res) {
     try {
-      const phase = await PhaseService.getAllPhase();
+      const phase = await PhaseService.getAllPhases();
       res.status(200).json(phase);
     } catch (error) {
       handleError(error,res);
