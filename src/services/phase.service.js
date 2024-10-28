@@ -4,7 +4,7 @@ import { phaseValidator } from '../validators/phaseValidator.js';
 
 export class PhaseService {
   static async getAllPhases() {
-    const phases = await PhaseDAO.getAllPhases();
+    const phases = await PhaseDAO.getAllPhase();
 
     if (phases === null || (Array.isArray(phases) && phases.length === 0)) {
       throw new NotFoundError('Phases not found');
