@@ -74,4 +74,14 @@ export class UserProjectService {
 
     return ownProjects;
   }
+
+  static async findJoinedProject(userId) {
+    const joinedInProjects = await UserProjectDAO.findJoinedInProject(userId);
+
+    if (Array.isArray(joinedInProjects) && joinedInProjects.length === 0) {
+      throw new NotFoundError('This user was not joined any project yet');
+    }
+
+    return joinedInProjects;
+  }
 }

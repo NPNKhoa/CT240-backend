@@ -11,7 +11,7 @@ export class ResponseController {
     }
 
     try {
-      const files = req.files.map((file) => file.filename); // Lưu thông tin file
+      const files = req?.files?.map((file) => file.filename);
       const responseData = { ...req.body, files };
 
       const newResponse = await ResponseService.createResponse(responseData);
@@ -21,7 +21,7 @@ export class ResponseController {
     }
   }
 
-  static async getAllResponses(req, res) {
+  static async getAllResponses(_, res) {
     try {
       const responses = await ResponseService.getAllResponses();
       res.status(200).json(responses);
