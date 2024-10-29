@@ -16,6 +16,7 @@ import userProjectRoute from './routes/userProjectRoute.js';
 import sampleRoute from './routes/sampleRoute.js';
 import responseRoute from './routes/responseRoute.js';
 import fileRoute from './routes/fileRoute.js';
+import questionRoute from './routes/questionRoute.js';
 
 dotenv.config({ path: `${process.cwd()}/.env` });
 
@@ -43,6 +44,7 @@ app.use(`/api/${apiVersion}/phase`, phaseRoute);
 app.use(`/api/${apiVersion}/projects`, projectRoute);
 app.use(`/api/${apiVersion}/user-projects`, userProjectRoute);
 app.use(`/api/${apiVersion}/samples`, sampleRoute);
+app.use(`/api/${apiVersion}/questions`, questionRoute);
 app.use(`/api/${apiVersion}/responses`, responseRoute);
 app.use(`/api/${apiVersion}/files`, fileRoute);
 

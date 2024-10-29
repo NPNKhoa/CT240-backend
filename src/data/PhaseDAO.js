@@ -6,7 +6,7 @@ export class PhaseDAO {
   }
 
   static async getPhaseByName(phaseName) {
-    return await Phase.findOne(phaseName);
+    return await Phase.findOne({phaseName });;
   }
 
   static async createPhase(phaseData) {
