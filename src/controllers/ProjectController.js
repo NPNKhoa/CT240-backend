@@ -1,3 +1,4 @@
+import { UserProjectDAO } from '../data/UserProjectDAO.js';
 import { ProjectService } from '../services/project.service.js';
 import { handleError } from '../utils/handleError.js';
 import {
@@ -8,6 +9,8 @@ import {
 
 export class ProjectController {
   static async createProject(req, res) {
+    const { id: userId } = req.userId;
+
     const { objectIdError } = projectIdSchema.validate(req.body.projectType);
 
     if (objectIdError) {
@@ -23,8 +26,22 @@ export class ProjectController {
     }
 
     try {
+      const existingUserProject = await UserProjectDAO.findUserRole(
+        userId,
+        projectId
+      );
+
+      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
+        return res.status(403).json({
+          message: 'You are not the project owner!',
+        });
+      }
+
       const newProject = await ProjectService.createProject(req.body);
-      res.status(201).json(newProject);
+
+      res.status(201).json({
+        data: newProject,
+      });
     } catch (error) {
       handleError(error, res);
     }
@@ -49,6 +66,18 @@ export class ProjectController {
   }
 
   static async updateProject(req, res) {
+    const { id: userId } = req.userId;
+
+    const { id: projectId } = req.params;
+
+    projectIdSchema.validate(projectId);
+
+    if (objectIdError) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
+    }
+
     const { error } = projectUpdateSchema.validate(req.body);
 
     if (error) {
@@ -56,10 +85,22 @@ export class ProjectController {
     }
 
     try {
+      const existingUserProject = await UserProjectDAO.findUserRole(
+        userId,
+        projectId
+      );
+
+      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
+        return res.status(403).json({
+          message: 'You are not the project owner!',
+        });
+      }
+
       const updatedProject = await ProjectService.updateProject(
-        req.params.id,
+        projectId,
         req.body
       );
+
       res.status(200).json(updatedProject);
     } catch (error) {
       handleError(error, res);
@@ -67,9 +108,23 @@ export class ProjectController {
   }
 
   static async deleteProject(req, res) {
+    const { id: userId } = req.userId;
+
     try {
+      const existingUserProject = await UserProjectDAO.findUserRole(
+        userId,
+        projectId
+      );
+
+      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
+        return res.status(403).json({
+          message: 'You are not the project owner!',
+        });
+      }
+
       await ProjectService.deleteProject(req.params.id);
-      res.status(204).send();
+
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }
