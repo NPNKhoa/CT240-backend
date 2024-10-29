@@ -136,7 +136,7 @@ export class UserProjectController {
         });
       }
 
-      const projects = await UserProjectService.getJoinedInProjects(userId);
+      const projects = await UserProjectService.findJoinedProject(userId);
 
       res.status(200).json({
         data: projects,
