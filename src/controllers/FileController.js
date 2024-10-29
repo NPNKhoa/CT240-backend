@@ -4,15 +4,16 @@ import { handleError } from '../utils/handleError.js';
 export class FileController {
   static async uploadFile(req, res) {
     try {
-      const files = req.files.map((file) => ({
+      const files = req?.files?.map((file) => ({
         filePath: file.path,
         fileType: file.mimetype,
         storageURL: `/uploads/${file.filename}`,
       }));
 
       const savedFiles = await Promise.all(
-        files.map((fileData) => FileService.createFile(fileData))
+        files?.map((fileData) => FileService.createFile(fileData))
       );
+
       res.status(201).json(savedFiles);
     } catch (error) {
       handleError(error, res);
