@@ -1,4 +1,6 @@
 import { QuestionDAO } from '../data/QuestionDAO.js';
+import { NotFoundError, ValidationError } from '../utils/Error.js';
+import { questionValidator } from '../validators/questionValidator.js';
 
 export class QuestionService {
     static async getAllQuestions() {
@@ -18,28 +20,41 @@ export class QuestionService {
         return question;
     }
 
-
-
     static async createQuestion(questionData) {
-        const newQuestion = {
-            ...questionData,
-        };
-        return await QuestionDAO.createQuestion(newQuestion);
+        // Validate question data
+        const { error } = questionValidator.validate(questionData);
+        if (error) {
+            throw new ValidationError(error.details[0].message);
+        }
+
+        // Create new question
+        return await QuestionDAO.createQuestion(questionData);
     }
 
     static async updateQuestion(questionId, questionData) {
-        const updatedQuestion = await QuestionDAO.updateQuestion(questionId, questionData);
-        if (!updatedQuestion) {
+        // Check if question exists
+        const existingQuestion = await QuestionDAO.findQuestionById(questionId);
+        if (!existingQuestion) {
             throw new NotFoundError('Question not found for updating');
         }
-        return updatedQuestion;
+
+        // Validate updated data
+        const { error } = questionValidator.validate(questionData);
+        if (error) {
+            throw new ValidationError(error.details[0].message);
+        }
+
+        // Update question
+        return await QuestionDAO.updateQuestion(questionId, questionData);
     }
 
     static async deleteQuestion(questionId) {
+        // Check if question exists
         const deletedQuestion = await QuestionDAO.deleteQuestion(questionId);
         if (!deletedQuestion) {
             throw new NotFoundError('Question not found for deletion');
         }
+
         return deletedQuestion;
     }
 }

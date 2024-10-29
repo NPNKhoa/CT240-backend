@@ -1,5 +1,5 @@
 import {ProjectTypeService } from '../services/projectType.service.js';
-import { projectTypeValidator } from '../validators/projectTypaValidator.js';
+import { projectTypeValidator } from '../validators/projectTypeValidator.js';
 import {handleError} from '../utils/handleError.js';
 export class ProjectTypesController {
 
