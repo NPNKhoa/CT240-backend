@@ -4,7 +4,7 @@ import { auth, isProjectOwner } from '../middlewares/auth.js';
 
 const router = express.Router();
 
-router.post('/', auth, isProjectOwner, ProjectController.createProject);
+router.post('/', auth, ProjectController.createProject);
 
 router.get('/:id', ProjectController.getProjectById);
 

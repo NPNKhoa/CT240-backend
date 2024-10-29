@@ -45,8 +45,8 @@ export const auth = async (req, res, next) => {
 import { UserProjectDAO } from '../data/UserProjectDAO.js';
 
 export const isProjectOwner = async (req, res, next) => {
-  const userId = req.userId;
-  const { projectId } = req.params;
+  const { id: userId } = req.userId;
+  const { id: projectId } = req.params;
 
   try {
     const userProject = await UserProjectDAO.findUserRole(userId, projectId);

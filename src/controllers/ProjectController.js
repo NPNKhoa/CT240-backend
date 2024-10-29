@@ -1,4 +1,5 @@
 import { ProjectService } from '../services/project.service.js';
+import { UserProjectService } from '../services/userProject.service.js';
 import { handleError } from '../utils/handleError.js';
 import {
   projectIdSchema,
@@ -22,8 +23,15 @@ export class ProjectController {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    const { id: userId } = req.userId;
+
     try {
       const newProject = await ProjectService.createProject(req.body);
+      await UserProjectService.createUserProject({
+        userId,
+        projectId: newProject._id,
+        userRole: 'owner',
+      });
 
       res.status(201).json({
         data: newProject,
@@ -54,7 +62,7 @@ export class ProjectController {
   static async updateProject(req, res) {
     const { id: projectId } = req.params;
 
-    projectIdSchema.validate(projectId);
+    const { objectIdError } = projectIdSchema.validate(projectId);
 
     if (objectIdError) {
       return res.status(400).json({
