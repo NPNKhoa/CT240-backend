@@ -122,4 +122,27 @@ export class UserProjectController {
       handleError(error, res);
     }
   }
+
+  static async getJoinedInProjects(req, res) {
+    try {
+      const { id: userId } = req.userId;
+
+      const { error } = userIdSchema.validate(userId);
+
+      if (error) {
+        return res.status(400).json({
+          error,
+          message: 'Invalid user Id',
+        });
+      }
+
+      const projects = await UserProjectService.getJoinedInProjects(userId);
+
+      res.status(200).json({
+        data: projects,
+      });
+    } catch (error) {
+      handleError(error, res);
+    }
+  }
 }

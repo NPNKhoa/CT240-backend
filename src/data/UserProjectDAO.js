@@ -51,4 +51,13 @@ export class UserProjectDAO {
       .select('projectId')
       .populate('projectId');
   }
+
+  static async findJoinedInProject(userId) {
+    return await UserProject.find({
+      userId,
+      userRole: 'member',
+    })
+      .select('projectId')
+      .populate('projectId');
+  }
 }
