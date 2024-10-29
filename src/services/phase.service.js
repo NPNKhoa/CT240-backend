@@ -58,7 +58,6 @@ export class PhaseService {
       throw new NotFoundError('Phase not found');
     }
 
-    // Delete phase
     return await PhaseDAO.deletePhase(phaseId);
   }
 }

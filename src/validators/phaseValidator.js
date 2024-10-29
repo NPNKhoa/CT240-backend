@@ -5,4 +5,5 @@ export const phaseValidator = Joi.object({
   phaseDescription: Joi.string().max(500).optional(),
   startDate: Joi.date().required(),
   endDate: Joi.date().min(Joi.ref('startDate')).required(),
+  projectId: Joi.string().hex().length(24).required(),
 });
