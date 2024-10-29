@@ -29,3 +29,11 @@ export class CredentialsError extends Error {
     this.statusCode = 400;
   }
 }
+
+export class AuthorizationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'AuthorizationError';
+    this.statusCode = 403;
+  }
+}

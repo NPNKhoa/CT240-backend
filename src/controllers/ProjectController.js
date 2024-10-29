@@ -1,4 +1,3 @@
-import { UserProjectDAO } from '../data/UserProjectDAO.js';
 import { ProjectService } from '../services/project.service.js';
 import { handleError } from '../utils/handleError.js';
 import {
@@ -9,8 +8,6 @@ import {
 
 export class ProjectController {
   static async createProject(req, res) {
-    const { id: userId } = req.userId;
-
     const { objectIdError } = projectIdSchema.validate(req.body.projectType);
 
     if (objectIdError) {
@@ -26,17 +23,6 @@ export class ProjectController {
     }
 
     try {
-      const existingUserProject = await UserProjectDAO.findUserRole(
-        userId,
-        projectId
-      );
-
-      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
-        return res.status(403).json({
-          message: 'You are not the project owner!',
-        });
-      }
-
       const newProject = await ProjectService.createProject(req.body);
 
       res.status(201).json({
@@ -66,8 +52,6 @@ export class ProjectController {
   }
 
   static async updateProject(req, res) {
-    const { id: userId } = req.userId;
-
     const { id: projectId } = req.params;
 
     projectIdSchema.validate(projectId);
@@ -85,17 +69,6 @@ export class ProjectController {
     }
 
     try {
-      const existingUserProject = await UserProjectDAO.findUserRole(
-        userId,
-        projectId
-      );
-
-      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
-        return res.status(403).json({
-          message: 'You are not the project owner!',
-        });
-      }
-
       const updatedProject = await ProjectService.updateProject(
         projectId,
         req.body
@@ -108,20 +81,7 @@ export class ProjectController {
   }
 
   static async deleteProject(req, res) {
-    const { id: userId } = req.userId;
-
     try {
-      const existingUserProject = await UserProjectDAO.findUserRole(
-        userId,
-        projectId
-      );
-
-      if (!existingUserProject || existingUserProject.userRole !== 'owner') {
-        return res.status(403).json({
-          message: 'You are not the project owner!',
-        });
-      }
-
       await ProjectService.deleteProject(req.params.id);
 
       res.sendStatus(204);
