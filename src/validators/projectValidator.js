@@ -7,9 +7,9 @@ export const projectValidator = Joi.object({
   projectCreateDate: Joi.date().optional(),
   projectStatus: Joi.string()
     .valid('active', 'completed', 'canceled')
-    .default('canceled'),
+    .default('active'),
   startDate: Joi.date().required(),
-  endDate: Joi.date().greater(Joi.ref('startDate')).required(),
+  endDate: Joi.date().greater(Joi.ref('startDate')).optional(),
 });
 
 export const projectUpdateSchema = Joi.object({
