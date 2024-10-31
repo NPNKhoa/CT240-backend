@@ -23,12 +23,6 @@ export class PhaseController {
   }
 
   static async createPhase(req, res) {
-    const {error} = PhaseService.createPhase(req.body);
-    if(error){
-        console.log(error);
-        return res.status(400).json({ message: error.details[0].message });
-    }
-
     try {
       const newPhase = await PhaseService.createPhase(req.body);
       res.status(201).json(newPhase);
