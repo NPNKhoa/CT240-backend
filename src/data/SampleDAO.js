@@ -21,4 +21,12 @@ export class SampleDAO {
   static async deleteSample(id) {
     return await Sample.findByIdAndDelete(id);
   }
+
+  static async addQuestion(sampleId, questionId) {
+    return await Sample.findByIdAndUpdate(
+      sampleId,
+      { $addToSet: { questionId: questionId } },
+      { new: true }
+    );
+  }
 }

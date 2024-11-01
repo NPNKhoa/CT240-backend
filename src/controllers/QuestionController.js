@@ -1,4 +1,5 @@
 import { QuestionService } from '../services/question.service.js';
+import { SampleService } from '../services/sample.service.js';
 
 export class QuestionController {
   static async getAllQuestions(_, res) {
@@ -24,6 +25,7 @@ export class QuestionController {
 
   static async createQuestion(req, res) {
     const { error } = QuestionService.createQuestion(req.body);
+
     if (error) {
       console.log(error);
       return res.status(400).json({ message: error.details[0].message });
@@ -31,6 +33,7 @@ export class QuestionController {
 
     try {
       const newQuestion = await QuestionService.createQuestion(req.body);
+
       res.status(201).json(newQuestion);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -39,7 +42,10 @@ export class QuestionController {
 
   static async updateQuestion(req, res) {
     try {
-      const updatedQuestion = await QuestionService.updateQuestion(req.params.id, req.body);
+      const updatedQuestion = await QuestionService.updateQuestion(
+        req.params.id,
+        req.body
+      );
       res.status(200).json(updatedQuestion);
     } catch (error) {
       res.status(400).json({ message: error.message });
