@@ -37,4 +37,14 @@ export class SampleService {
     }
     return await SampleDAO.deleteSample(id);
   }
+
+  static async addQuestion(sampleId, questionId) {
+    const sample = await SampleDAO.getSampleById(sampleId);
+
+    if (!sample) {
+      throw new NotFoundError('Sample not found');
+    }
+
+    return await SampleDAO.addQuestion(sampleId, questionId);
+  }
 }

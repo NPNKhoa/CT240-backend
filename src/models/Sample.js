@@ -7,6 +7,13 @@ const sampleSchema = new mongoose.Schema(
     collectionDate: { type: Date },
     location: { type: String },
     sampleType: { type: String, required: true },
+    questionId: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'Question',
+        required: true,
+      },
+    ],
     phaseId: {
       type: mongoose.Types.ObjectId,
       ref: 'Phase',
