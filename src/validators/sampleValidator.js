@@ -6,6 +6,6 @@ export const sampleValidator = Joi.object({
   collectionDate: Joi.date().optional(),
   location: Joi.string().optional(),
   sampleType: Joi.string().required(),
-  questionId: Joi.array().items(Joi.string().length(24)).required(),
+  questionId: Joi.array().items(Joi.string().length(24)).optional(),
   phaseId: Joi.string().required(),
 });
