@@ -15,7 +15,7 @@ const projectSchema = new mongoose.Schema({
     default: 'canceled',
   },
   startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
+  endDate: { type: Date },
 });
 
 export const Project = mongoose.model('Project', projectSchema);
