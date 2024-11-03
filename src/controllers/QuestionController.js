@@ -1,5 +1,6 @@
 import { QuestionService } from '../services/question.service.js';
 import { SampleService } from '../services/sample.service.js';
+import { questionValidator } from '../validators/questionValidator.js';
 
 export class QuestionController {
   static async getAllQuestions(_, res) {
@@ -24,7 +25,7 @@ export class QuestionController {
   }
 
   static async createQuestion(req, res) {
-    const { error } = QuestionService.createQuestion(req.body);
+    const { error } = questionValidator.validate(req.body);
 
     if (error) {
       console.log(error);

@@ -1,6 +1,7 @@
 import { QuestionDAO } from '../data/QuestionDAO.js';
 import { NotFoundError, ValidationError } from '../utils/Error.js';
 import { questionValidator } from '../validators/questionValidator.js';
+import { SampleService } from './sample.service.js';
 
 export class QuestionService {
   static async getAllQuestions() {
@@ -32,8 +33,8 @@ export class QuestionService {
 
     const question = await QuestionDAO.createQuestion(questionData);
 
-    if (sampleId) {
-      await SampleService.addQuestion(sampleId, question._id);
+    if (questionData.sampleId) {
+      await SampleService.addQuestion(questionData.sampleId, question._id);
     }
 
     return question;
