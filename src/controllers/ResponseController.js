@@ -21,7 +21,7 @@ export class ResponseController {
       const { id: userId } = req.userId;
 
       const createdFiles = await Promise.all(
-        files?.map((fileData) => FileService.createFile(fileData))
+        files?.map((fileData) => FileService.uploadAndSaveFile(fileData))
       );
 
       const newResponse = await ResponseService.createResponse({
