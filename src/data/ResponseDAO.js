@@ -8,7 +8,7 @@ export class ResponseDAO {
 
   static async getAllResponses() {
     return await Response.find()
-      .populate('fileId questionId')
+      .populate('fileIds questionId')
       .populate({
         path: 'userId',
         model: 'User',
@@ -19,7 +19,7 @@ export class ResponseDAO {
 
   static async getResponseById(responseId) {
     return await Response.findById(responseId)
-      .populate('fileId questionId')
+      .populate('fileIds questionId')
       .populate({
         path: 'userId',
         model: 'User',
