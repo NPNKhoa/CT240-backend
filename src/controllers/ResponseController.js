@@ -1,6 +1,7 @@
 import { ResponseService } from '../services/response.service.js';
 import { responseValidator } from '../validators/responseValidator.js';
 import { handleError } from '../utils/handleError.js';
+import { FileService } from '../services/file.service.js';
 
 export class ResponseController {
   static async createResponse(req, res) {
@@ -11,11 +12,29 @@ export class ResponseController {
     }
 
     try {
-      const files = req?.files?.map((file) => file.filename);
+      const files = req?.files?.map((file) => ({
+        filePath: file.path,
+        fileType: file.mimetype,
+        storageURL: `/uploads/${file.filename}`,
+      }));
       const responseData = { ...req.body, files };
+      const { id: userId } = req.userId;
 
-      const newResponse = await ResponseService.createResponse(responseData);
-      res.status(201).json(newResponse);
+      const createdFiles = await Promise.all(
+        files?.map((fileData) => FileService.createFile(fileData))
+      );
+
+      const newResponse = await ResponseService.createResponse({
+        ...responseData,
+        fileIds: createdFiles.map((file) => file._id),
+        userId,
+      });
+
+      const populatedResponse = await ResponseService.getResponseById(
+        newResponse._id
+      );
+
+      res.status(201).json(populatedResponse);
     } catch (error) {
       handleError(error, res);
     }
