@@ -1,5 +1,7 @@
 import { FileDAO } from '../data/FileDAO.js';
 import { NotFoundError } from '../utils/Error.js';
+import cloudinary from '../configs/cloudinary.js';
+import fs from 'fs';
 
 export class FileService {
   static async createFile(fileData) {
@@ -29,5 +31,21 @@ export class FileService {
     }
 
     return await FileDAO.deleteFile(fileId);
+  }
+
+  static async uploadAndSaveFile(file) {
+    const result = await cloudinary.uploader.upload(file.filePath, {
+      folder: 'CT240',
+    });
+
+    fs.unlinkSync(file.filePath);
+
+    const fileData = {
+      filePath: file.filePath,
+      fileType: file.fileType,
+      storageURL: result.secure_url,
+    };
+
+    return await FileDAO.createFile(fileData);
   }
 }
