@@ -37,4 +37,8 @@ export class ResponseDAO {
   static async deleteResponse(responseId) {
     return await Response.findByIdAndDelete(responseId);
   }
+
+  static async findByQuestion(questionId) {
+    return await Response.find({ questionId });
+  }
 }

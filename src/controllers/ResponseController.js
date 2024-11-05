@@ -43,6 +43,7 @@ export class ResponseController {
   static async getAllResponses(_, res) {
     try {
       const responses = await ResponseService.getAllResponses();
+
       res.status(200).json(responses);
     } catch (error) {
       handleError(error, res);
@@ -76,7 +77,26 @@ export class ResponseController {
   static async deleteResponse(req, res) {
     try {
       await ResponseService.deleteResponse(req.params.id);
-      res.status(204).send();
+
+      res.status(204);
+    } catch (error) {
+      handleError(error, res);
+    }
+  }
+
+  static async getResponseWithQuery(req, res) {
+    try {
+      let responses = [];
+
+      if (req.query.question) {
+        responses = await ResponseService.getResponseByQuestion(
+          req.query.question
+        );
+      }
+
+      return res.status(200).json({
+        data: responses,
+      });
     } catch (error) {
       handleError(error, res);
     }

@@ -5,9 +5,11 @@ import { auth, isProjectOwner } from '../middlewares/auth.js';
 
 const router = express.Router();
 
-router.get('/', auth, isProjectOwner, ResponseController.getAllResponses);
+router.get('/', ResponseController.getAllResponses);
 
-router.get('/:id', auth, isProjectOwner, ResponseController.getResponseById);
+router.get('/:id', ResponseController.getResponseWithQuery); // :id is the projectId
+
+router.get('/:id', auth, ResponseController.getResponseById);
 
 router.post(
   '/',
