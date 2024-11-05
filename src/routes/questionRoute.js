@@ -1,16 +1,17 @@
 import express from 'express';
-
 import { QuestionController } from '../controllers/QuestionController.js';
+import { auth,isProjectOwner, } from '../middlewares/auth.js';
+
 const router = express.Router();
 
-router.post('/',QuestionController.createQuestion);
+router.post('/',auth,isProjectOwner,QuestionController.createQuestion);
 
-router.get('/', QuestionController.getAllQuestions);
+router.get('/',auth, QuestionController.getAllQuestions);
 
-router.get('/:id', QuestionController.getQuestionById);
+router.get('/:id',auth, QuestionController.getQuestionById);
 
-router.put('/:id', QuestionController.updateQuestion);
+router.put('/:id',auth,isProjectOwner, QuestionController.updateQuestion);
 
-router.delete('/:id', QuestionController.deleteQuestion);
+router.delete('/:id',auth,isProjectOwner, QuestionController.deleteQuestion);
 
 export default router;

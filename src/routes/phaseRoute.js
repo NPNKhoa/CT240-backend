@@ -1,16 +1,17 @@
 import express from 'express';
-
 import { PhaseController } from '../controllers/PhaseController.js';
+import { auth,isProjectOwner } from '../middlewares/auth.js';
+
 const router = express.Router();
 
-router.post('/',PhaseController.createPhase);
+router.post('/',auth,isProjectOwner,PhaseController.createPhase);
 
-router.get('/', PhaseController.getAllPhase);
+router.get('/',auth, PhaseController.getAllPhase);
 
-router.get('/:phaseName', PhaseController.getPhasebyName);
+router.get('/:phaseName',auth, PhaseController.getPhasebyName);
 
-router.put('/:id', PhaseController.updatePhase);
+router.put('/:id',auth,isProjectOwner, PhaseController.updatePhase);
 
-router.delete('/:id', PhaseController.deletePhase);
+router.delete('/:id',auth,isProjectOwner, PhaseController.deletePhase);
 
 export default router;

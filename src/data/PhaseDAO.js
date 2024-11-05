@@ -5,6 +5,10 @@ export class PhaseDAO {
     return await Phase.find();
   }
 
+  static async getPhaseById(phaseId) {
+    return await Phase.findById(phaseId);
+  }
+
   static async getPhaseByName(phaseName) {
     return await Phase.findOne({phaseName });;
   }
