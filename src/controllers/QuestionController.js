@@ -56,7 +56,7 @@ export class QuestionController {
   static async deleteQuestion(req, res) {
     try {
       await QuestionService.deleteQuestion(req.params.id);
-      res.status(204).send();
+      res.sendStatus(204);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

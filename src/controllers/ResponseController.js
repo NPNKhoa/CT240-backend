@@ -78,7 +78,7 @@ export class ResponseController {
     try {
       await ResponseService.deleteResponse(req.params.id);
 
-      res.status(204);
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }

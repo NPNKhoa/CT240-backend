@@ -41,7 +41,7 @@ export class FileController {
   static async deleteFile(req, res) {
     try {
       await FileService.deleteFile(req.params.id);
-      res.status(204).send();
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }

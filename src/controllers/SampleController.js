@@ -52,7 +52,7 @@ export class SampleController {
   static async deleteSample(req, res) {
     try {
       await SampleService.deleteSample(req.params.id);
-      res.status(204).send();
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }
