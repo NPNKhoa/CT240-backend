@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
 
 const responseSchema = new mongoose.Schema({
-  responseAnswer: { type: String, required: false },
+  responseAnswer: { type: String },
   fileIds: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'File',
-      required: false,
     },
   ],
   questionId: {
