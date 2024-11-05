@@ -51,4 +51,14 @@ export class ResponseService {
     await ResponseDAO.deleteResponse(responseId);
     return;
   }
+
+  static async getResponseByQuestion(questionId) {
+    const response = await ResponseDAO.findByQuestion(questionId);
+
+    if (Array.isArray(response) && response.length === 0) {
+      throw new NotFoundError('This project has no response yet');
+    }
+
+    return response;
+  }
 }
