@@ -20,4 +20,9 @@ router.post('/', UserProjectController.createUserProject);
 
 router.delete('/:id', UserProjectController.deleteUserProject);
 
+router.delete(
+  '/:userId/:projectId',
+  UserProjectController.removeUserFromProject
+);
+
 export default router;
