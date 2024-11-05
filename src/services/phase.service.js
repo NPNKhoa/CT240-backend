@@ -53,7 +53,7 @@ export class PhaseService {
 
   static async deletePhase(phaseId) {
     // Check if phase exists
-    const existingPhase = await PhaseDAO.findPhaseById(phaseId);
+    const existingPhase = await PhaseDAO.getPhaseById(phaseId);
     if (!existingPhase) {
       throw new NotFoundError('Phase not found');
     }
