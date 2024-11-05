@@ -51,7 +51,7 @@ export class UserProjectController {
   static async deleteUserProject(req, res) {
     try {
       await UserProjectService.deleteUserProject(req.params.id);
-      res.status(204).send();
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }
@@ -141,6 +141,18 @@ export class UserProjectController {
       res.status(200).json({
         data: projects,
       });
+    } catch (error) {
+      handleError(error, res);
+    }
+  }
+
+  static async removeUserFromProject(req, res) {
+    try {
+      const { userId, projectId } = req.params;
+
+      await UserProjectService.removeUserFromProject(userId, projectId);
+
+      res.sendStatus(204);
     } catch (error) {
       handleError(error, res);
     }

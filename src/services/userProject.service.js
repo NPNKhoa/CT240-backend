@@ -84,4 +84,19 @@ export class UserProjectService {
 
     return joinedInProjects;
   }
+
+  static async removeUserFromProject(userId, projectId) {
+    const deletedUserProject = await UserProjectDAO.findUserRole(
+      userId,
+      projectId
+    );
+
+    if (!deletedUserProject) {
+      throw new NotFoundError('Not found this user in this project');
+    }
+
+    await UserProjectDAO.deleteUserProject(deletedUserProject._id);
+
+    return;
+  }
 }
