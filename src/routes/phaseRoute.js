@@ -12,6 +12,6 @@ router.get('/:phaseName', auth, PhaseController.getPhasebyName);
 
 router.put('/:id', auth, isProjectOwner, PhaseController.updatePhase);
 
-router.delete('/:id', auth, isProjectOwner, PhaseController.deletePhase);
+router.delete('/:id', auth, PhaseController.deletePhase);
 
 export default router;
