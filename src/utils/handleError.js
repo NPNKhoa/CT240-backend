@@ -6,7 +6,7 @@ import {
 } from './Error.js';
 
 export function handleError(error, res) {
-  console.error(error);
+  console.log(error);
 
   if (error instanceof ConflictError) {
     return res.status(error.statusCode).json({ message: error.message });

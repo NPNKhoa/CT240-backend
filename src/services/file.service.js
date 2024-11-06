@@ -34,8 +34,15 @@ export class FileService {
   }
 
   static async uploadAndSaveFile(file) {
+    const resourceType = file.fileType.startsWith('image')
+      ? 'image'
+      : file.fileType.startsWith('video')
+      ? 'video'
+      : 'raw';
+
     const result = await cloudinary.uploader.upload(file.filePath, {
       folder: 'CT240',
+      resource_type: resourceType,
     });
 
     fs.unlinkSync(file.filePath);
